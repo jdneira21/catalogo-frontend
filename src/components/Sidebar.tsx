@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { push as Menu, State } from 'react-burger-menu'
 import { IoCloseCircle } from 'react-icons/io5'
 import { TiThMenu } from 'react-icons/ti'
-import { useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { getCategorias } from '../querys'
 import useStore from '../store/useStore'
 
@@ -39,7 +39,7 @@ export default function Sidebar() {
         customBurgerIcon={<TiThMenu />}
         customCrossIcon={<IoCloseCircle />}>
         <button onClick={() => butt('/')}>Inicio</button>
-        <button onClick={() => butt('/panel')}>Panel</button>
+        <NavLink to={'/panel'}>Panel</NavLink>
         {data?.map((cat) => (
           <a key={cat.id} onClick={() => butt(cat.slug)}>
             {cat.nombre}
