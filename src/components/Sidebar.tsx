@@ -46,7 +46,7 @@ export default function Sidebar() {
           </a>
         ))}
       </Menu>
-      <div className='bg-blue-600 text-white'>{totalProducts}</div>
+      <div className='bg-orange-600 text-white'>{totalProducts}</div>
     </>
   )
 }
