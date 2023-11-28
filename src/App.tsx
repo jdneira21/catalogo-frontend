@@ -1,19 +1,17 @@
-import { Route, Routes } from 'react-router-dom'
-import Sidebar from './components/Sidebar'
-import PageCategory from './pages/PageCategory'
-import PageHome from './pages/PageHome'
+import { RouterProvider } from 'react-router-dom'
+import { router } from './router'
 
 function App() {
   return (
     <div className='h-screen'>
-      <Sidebar />
-      <Routes>
-        <Route path='/' element={<PageHome />} />
-        <Route path=':categoria' element={<PageCategory />} />
-      </Routes>
-      {/* <Sidebar />
-      <Outlet />
-      <RouterProvider router={router} /> */}
+      {/* <Routes>
+        <Route path='/' element={<PageHome />}>
+          <Route path='/:categoria' element={<PageCategory />} />
+        </Route>
+        <Route path='/panel' element={<PagePanel />} />
+      </Routes> */}
+
+      <RouterProvider router={router} />
     </div>
   )
 }

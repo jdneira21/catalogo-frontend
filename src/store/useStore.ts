@@ -1,45 +1,94 @@
 import { create } from 'zustand'
-import { IProduct } from '../interfaces'
+import { ICategoria, IProducto } from '../interfaces'
 
 interface State {
-  cart: IProduct[]
+  cart: IProducto[]
+  stateDialogCategory: boolean
+  stateDialogNewCategory: boolean
+  stateDialogEditCategory: boolean
+  stateDialogDeleteCategory: boolean
+  stateDialogProduct: boolean
+  objCategory: ICategoria
+  objDeleteCategory: ICategoria
+  categories: ICategoria[]
+
+  imageCrop: string
 }
 
 interface Action {
-  addCart: (product: IProduct) => void
+  addCart: (product: IProducto) => void
+  getTotalProducts: () => number
+  setStateDialogCategory: (bool: boolean) => void
+  setStateDialogNewCategory: (bool: boolean, categoria?: ICategoria) => void
+  setStateDialogDeleteCategory: (bool: boolean, categoria?: ICategoria) => void
+
+  setStateDialogProduct: (bool: boolean) => void
+  setCategories: (array: ICategoria[]) => void
+
+  setImageCrop: (dataImage: string) => void
+  resetImageCrop: () => void
 }
 
 const initialState: State = {
-  cart: []
+  cart: [],
+  stateDialogCategory: false,
+  stateDialogNewCategory: false,
+  stateDialogEditCategory: false,
+  stateDialogDeleteCategory: false,
+  stateDialogProduct: false,
+  objCategory: {} as ICategoria,
+  objDeleteCategory: {} as ICategoria,
+  categories: [],
+
+  imageCrop: ''
 }
 
 export default create<State & Action>()((set, get) => ({
   ...initialState,
   addCart: (product) => {
-    product = { ...product, cantidad: 1 }
-    // product.cantidad = 1
-    console.log(product)
-    // product.cantidad
-    // const cart = get().cart
-
-    // const newCart3 = [...cart]
-
-    // const newCart = newCart3.map((c) => ({ ...c, cantidad: 0 }))
-
-    // this.cart.total = this.cart.products.reduce((a, b) => a + b.price, 0);
-
-    // console.log(newCart)
-
-    // const xx = newCart.find((c) => c.id == product.id)
-    // xx?.cantidad++
-    // console.log(xx)
-
-    // const someProduct = cart.some((prod) => prod.id == product.id)
-    // if (someProduct) return
     set((state) => {
-      console.log(state)
-      console.log(product)
+      product = { ...product, cantidad: 1 }
+
+      const findProductExists = state.cart.find((prod) => prod.id == product.id)
+
+      if (product.id == findProductExists?.id) {
+        const newCart = state.cart.map((prod) => {
+          if (prod.id == findProductExists?.id) {
+            prod.cantidad = prod.cantidad + 1
+          }
+          return prod
+        })
+        return { cart: [...newCart] }
+      }
+
       return { cart: [product, ...state.cart] }
     })
+  },
+  getTotalProducts: () => get().cart.reduce((suma, prod) => suma + prod.cantidad, 0),
+
+  setStateDialogCategory: (bool) => {
+    set({ stateDialogCategory: bool })
+  },
+  setStateDialogNewCategory: (bool, objCategory) => {
+    console.log(objCategory)
+    set({ stateDialogNewCategory: bool, objCategory: objCategory ?? ({} as ICategoria) })
+  },
+  setStateDialogDeleteCategory: (bool, objDeleteCategory) => {
+    set({ stateDialogDeleteCategory: bool, objDeleteCategory: objDeleteCategory ?? ({} as ICategoria) })
+  },
+
+  setStateDialogProduct: (bool) => {
+    set({ stateDialogProduct: bool })
+  },
+
+  setCategories: (array) => {
+    set({ categories: array })
+  },
+
+  setImageCrop: (dataImage) => {
+    set({ imageCrop: dataImage })
+  },
+  resetImageCrop: () => {
+    set(initialState)
   }
 }))

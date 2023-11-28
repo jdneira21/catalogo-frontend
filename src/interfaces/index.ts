@@ -1,13 +1,18 @@
-export interface ICategory {
+export interface ICategoria {
   id: number
   nombre: string
   slug: string
-  productos: IProduct[]
+  productos: IProducto[]
 }
 
-export interface IProduct {
+export interface IProducto {
   id: number
-  titulo: string
+  nombre: string
   precio: number
+  descripcion: string
+  imagen: string
+  imagenBase64: string
   cantidad: number
+  categoria_id: number
+  categoria: ICategoria
 }

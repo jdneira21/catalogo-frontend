@@ -83,3 +83,25 @@ Note: Beware of modifying this element as it can break the animations - you shou
     display: none;
   }
 } */
+
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    clip-path: inset(60% 20% 60% 20%);
+  }
+
+  to {
+    opacity: 1;
+    clip-path: inset(0% 0% 0% 0%);
+  }
+}
+
+.revealing-image {
+  view-timeline-name: --revealing-image;
+  view-timeline-axis: block;
+  animation: linear reveal both;
+  animation-timeline: --revealing-image;
+  animation-range: entry 10% cover 60%;
+  box-shadow: 0 0 0 black;
+}

@@ -1,7 +1,11 @@
+import { Outlet } from 'react-router-dom'
+import Sidebar from '../components/Sidebar'
+
 export default function PageHome() {
   return (
-    <div>
-      <input type="text" onChange={e => console.log(e)} />
-    </div>
+    <>
+      <Sidebar />
+      <Outlet />
+    </>
   )
 }

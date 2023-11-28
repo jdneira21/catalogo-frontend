@@ -4,16 +4,19 @@ import { push as Menu, State } from 'react-burger-menu'
 import { IoCloseCircle } from 'react-icons/io5'
 import { TiThMenu } from 'react-icons/ti'
 import { useNavigate } from 'react-router-dom'
-import { ICategory } from '../interfaces'
 import { getCategorias } from '../querys'
+import useStore from '../store/useStore'
 
 export default function Sidebar() {
+  const totalProducts = useStore((state) => state.getTotalProducts())
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
-  const { data } = useQuery<ICategory[]>({
+  const { data } = useQuery({
     queryKey: ['categorias'],
     queryFn: getCategorias
   })
+
+  // console.log(data)
 
   const butt = (slug: string) => {
     navigate(slug)
@@ -29,17 +32,20 @@ export default function Sidebar() {
   }
 
   return (
-    <Menu
-      isOpen={open}
-      onStateChange={(state) => handleStateChange(state)}
-      customBurgerIcon={<TiThMenu />}
-      customCrossIcon={<IoCloseCircle />}>
-      <button onClick={() => butt('/')}>Inicio</button>
-      {data?.map((cat) => (
-        <button key={cat.id} onClick={() => butt(cat.slug)}>
-          {cat.nombre}
-        </button>
-      ))}
-    </Menu>
+    <>
+      <Menu
+        isOpen={open}
+        onStateChange={(state) => handleStateChange(state)}
+        customBurgerIcon={<TiThMenu />}
+        customCrossIcon={<IoCloseCircle />}>
+        <button onClick={() => butt('/')}>Inicio</button>
+        {data?.map((cat) => (
+          <a key={cat.id} onClick={() => butt(cat.slug)}>
+            {cat.nombre}
+          </a>
+        ))}
+      </Menu>
+      <div className='bg-red-600 text-white'>{totalProducts}</div>
+    </>
   )
 }
