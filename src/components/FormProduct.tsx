@@ -67,7 +67,7 @@ export default function FormProduct() {
   const onCropComplete = async (croppedArea: Area) => {
     console.log('onCropComplete')
     try {
-      const image = await getCroppedImg(img, croppedArea, { width: 600, height: 600 * 1 })
+      const image = await getCroppedImg(img, croppedArea, { width: 700, height: 400 * 1 })
       // setCroppedImg(image)
       setImageCrop(image)
       // console.log(image)

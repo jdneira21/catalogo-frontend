@@ -39,6 +39,7 @@ export default function Sidebar() {
         customBurgerIcon={<TiThMenu />}
         customCrossIcon={<IoCloseCircle />}>
         <button onClick={() => butt('/')}>Inicio</button>
+        <button onClick={() => butt('/panel')}>Panel</button>
         {data?.map((cat) => (
           <a key={cat.id} onClick={() => butt(cat.slug)}>
             {cat.nombre}
